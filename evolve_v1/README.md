@@ -1,36 +1,167 @@
-# Baseline Regression - Preprocessing & Modeling (evolve_v1)
+# Baseline Regression — Preprocessing & Modeling (`evolve_v1`)
 
-This folder contains the initial version of the food delivery predictive model, focusing on data preprocessing, exploratory data analysis, and baseline regressions.
+This phase focuses on establishing the initial machine learning workflow for food delivery prediction through preprocessing, exploratory analysis, and baseline regression/classification models.
 
-## 📌 Objectives
+---
 
-1. **Regression**: Predict the exact food delivery duration in minutes (`Delivery_Time`).
-2. **Classification**: Categorize delivery status as **"Fast"** or **"Delayed"** based on the median time.
+# 📌 Objectives
 
-## 📂 Workflow & Data Pipeline
+## Regression Task
+Predict the exact delivery duration in minutes using continuous regression models.
 
-### 1. Data Preprocessing & EDA
+## Classification Task
+Classify deliveries into operational categories:
+- **Fast**
+- **Delayed**
 
-- **Data Cleaning**: Resolved inconsistencies and handled missing values in columns like `Distance` and `Delivery_Time`.
-- **Feature Engineering**: Converted raw coordinates into distance metrics using the Haversine formula to establish physical constraints.
-- **Transformation**:
-  - Encoded categorical columns such as `Weather_Conditions`, `Traffic_Conditions`, and `Vehicle_Type`.
-  - Normalized continuous features (`Distance`, `Order_Cost`, `Order_Time`) for stable model convergence.
-- **EDA**:
-  - Analyzed feature correlations to isolate the key drivers of delivery delays.
-  - Used boxplots for outlier detection to clean noisy data entries.
+based on the median delivery duration.
 
-### 2. Predictive Modeling
+---
 
-- **Linear Regression (Regression)**:
-  - Notebook: [baseline_workflow.ipynb](file:///c:/Users/admin/VSCode/ML/Food-Delivery-Time-Prediction/evolve_v1/baseline_workflow.ipynb)
-  - Modeled continuous minutes taken for delivery.
-  - Evaluated using Mean Squared Error (MSE), R-squared ($R^2$), and Mean Absolute Error (MAE).
-- **Logistic Regression (Classification)**:
-  - Classified delivery speed probabilities using the sigmoid activation function.
-  - Evaluated using Accuracy, Precision, Recall, and Confusion Matrices.
+# 🏗️ Workflow Pipeline
 
-## 📈 Findings & Takeaways
+```mermaid
+graph TD
+    A[Raw Delivery Dataset] --> B[Data Cleaning]
+    B --> C[Missing Value Handling]
+    C --> D[Feature Engineering]
+    D --> E[Haversine Distance Calculation]
+    E --> F[Categorical Encoding]
+    F --> G[Feature Scaling]
+    G --> H[Exploratory Data Analysis]
+    H --> I[Baseline Modeling]
 
-* **Linear Assumption Limitation**: Linear regression assuming independent additive effects struggled with traffic gridlocks and weather penalties, which affect delivery times non-linearly.
-* **Continuous Variance**: Wait times at restaurants and courier delays introduced high variance into continuous minutes prediction, showing that category bounds (Fast vs. Delayed) serve as a more stable operational metric.
+    subgraph Models
+        I --> J1[Linear Regression]
+        I --> J2[Logistic Regression]
+    end
+
+    J1 --> K[Regression Metrics]
+    J2 --> L[Classification Metrics]
+
+    style A fill:#1f2937,color:#fff
+    style B fill:#2563eb,color:#fff
+    style D fill:#7c3aed,color:#fff
+    style I fill:#ea580c,color:#fff
+    style K fill:#059669,color:#fff
+    style L fill:#dc2626,color:#fff
+```
+
+---
+
+# 📂 Data Preprocessing & EDA
+
+## Data Cleaning
+- Resolved inconsistent entries
+- Handled missing values in:
+  - `Distance`
+  - `Delivery_Time`
+
+## Feature Engineering
+Implemented Haversine Distance calculation using geographical coordinates to model real-world travel distance between restaurant and customer locations.
+
+## Data Transformation
+
+### Categorical Encoding
+Encoded operational categorical features:
+- `Weather_Conditions`
+- `Traffic_Conditions`
+- `Vehicle_Type`
+
+### Feature Scaling
+Normalized continuous variables:
+- `Distance`
+- `Order_Cost`
+- `Order_Time`
+
+to improve training stability and model convergence.
+
+---
+
+# 📊 Exploratory Data Analysis
+
+EDA was performed to identify delivery-time patterns and operational bottlenecks.
+
+### Analysis Performed
+- Feature correlation analysis
+- Outlier detection using boxplots
+- Distribution analysis of delivery durations
+- Impact analysis of traffic and weather conditions
+
+### Observations
+- Distance showed strong correlation with delivery duration
+- Traffic conditions introduced high variance
+- Weather penalties affected prediction stability
+
+---
+
+# 🤖 Baseline Models
+
+## Linear Regression
+
+### Purpose
+Predict continuous delivery duration in minutes.
+
+### Evaluation Metrics
+- Mean Squared Error (MSE)
+- Mean Absolute Error (MAE)
+- R² Score
+
+### Observations
+Linear relationships captured basic delivery trends but struggled with:
+- traffic congestion patterns
+- operational delays
+- non-linear environmental effects
+
+---
+
+## Logistic Regression
+
+### Purpose
+Classify deliveries as:
+- Fast
+- Delayed
+
+### Evaluation Metrics
+- Accuracy
+- Precision
+- Recall
+- Confusion Matrix
+
+### Observations
+Classification-based delivery categorization produced more operationally stable predictions compared to continuous-time estimation.
+
+---
+
+# 📈 Key Findings
+
+## Linear Assumption Limitation
+Linear Regression assumes additive independent effects, which limits performance under:
+- traffic gridlocks
+- weather disruptions
+- restaurant waiting delays
+
+These factors introduce non-linear delivery behavior.
+
+## Continuous Variance
+Delivery duration prediction contained high variance due to:
+- courier delays
+- restaurant preparation variability
+- environmental conditions
+
+This demonstrated that categorical delivery-state prediction can sometimes serve as a more reliable operational metric than exact-minute prediction.
+
+---
+
+# 🧠 Concepts Explored
+
+- Data preprocessing workflows
+- Feature engineering
+- Haversine distance computation
+- Regression modeling
+- Binary classification
+- Feature scaling
+- Exploratory Data Analysis
+- Model evaluation metrics
+
+---
