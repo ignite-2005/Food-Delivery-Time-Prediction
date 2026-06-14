@@ -14,7 +14,7 @@ Classify deliveries into operational categories:
 - **Fast**
 - **Delayed**
 
-based on the median delivery duration.
+based on the 75th percentile of delivery duration.
 
 ---
 
@@ -52,10 +52,8 @@ graph TD
 # 📂 Data Preprocessing & EDA
 
 ## Data Cleaning
-- Resolved inconsistent entries
-- Handled missing values in:
-  - `Distance`
-  - `Delivery_Time`
+- Checked data integrity and confirmed zero missing or null values in the dataset.
+- Resolved inconsistent entries in coordinate formatting.
 
 ## Feature Engineering
 Implemented Haversine Distance calculation using geographical coordinates to model real-world travel distance between restaurant and customer locations.
@@ -70,9 +68,12 @@ Encoded operational categorical features:
 
 ### Feature Scaling
 Normalized continuous variables:
-- `Distance`
+- `Distance_calc` (recalculated distance)
+- `Delivery_Person_Experience`
+- `Restaurant_Rating`
+- `Customer_Rating`
 - `Order_Cost`
-- `Order_Time`
+- `Tip_Amount`
 
 to improve training stability and model convergence.
 
